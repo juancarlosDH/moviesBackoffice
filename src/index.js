@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-//import Menu from './components/Menu/Menu';
-//import Principal from './components/Principal/Principal';
+
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 

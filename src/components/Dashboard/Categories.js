@@ -1,9 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import CategoryItem from './CategoryItem';
 
-function Categories() {
-
-    const categories = [1,2,3,4,5,6];
+function Categories(props) {
 
     return (
         <div className="col-lg-6 mb-4">						
@@ -15,8 +14,8 @@ function Categories() {
                     <div className="row">
                        
                        {
-                           categories.map(function(element) {
-                             return <CategoryItem />
+                           props.categories.map(function(element, index) {
+                             return <CategoryItem number={element} key={index} />
                            })
                        }
                         
@@ -26,5 +25,11 @@ function Categories() {
         </div>
     )
 }
+
+Categories.propTypes = {
+    categories : PropTypes.array.isRequired
+}
+
+
 
 export default Categories;

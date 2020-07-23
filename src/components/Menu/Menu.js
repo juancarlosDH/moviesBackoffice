@@ -1,7 +1,16 @@
 import React from 'react';
+import MenuItem from './MenuItem';
 //import './menu.css';
 
 function Menu() {
+	const menuItems = [
+		{ active : "active", href: "/", fa : "fa-tachometer-alt", name : "Dashboard" },
+		{ active : "", href: "/", fa : "fa-folder", name : "Pages" },
+		{ active : "", href: "/", fa : "fa-chart-area", name : "Charts" },
+		{ active : "", href: "/", fa : "fa-table", name : "Reports" },
+		{ active : "", href: "/", fa : "fa-envelope", name : "Emails" },
+	];
+
     return (
         <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -13,35 +22,16 @@ function Menu() {
 			</a>
 			
 			<hr className="sidebar-divider my-0" />
-
-			<li className="nav-item active">
-				<a className="nav-link" href="/">
-					<i className="fas fa-fw fa-tachometer-alt"></i>
-					<span>Dashboard</span></a>
-			</li>
-
-			<hr className="sidebar-divider" />
-
-			<div className="sidebar-heading">Actions</div>
-
-			<li className="nav-item">
-				<a className="nav-link collapsed" href="/">
-					<i className="fas fa-fw fa-folder"></i>
-					<span>Pages</span>
-				</a>
-			</li>
-
-			<li className="nav-item">
-				<a className="nav-link" href="/">
-					<i className="fas fa-fw fa-chart-area"></i>
-					<span>Charts</span></a>
-			</li>
-
-			<li className="nav-item">
-				<a className="nav-link" href="/">
-					<i className="fas fa-fw fa-table"></i>
-					<span>Tables</span></a>
-			</li>
+			
+			{
+				menuItems.map( (menuItem, index) => {
+					return <MenuItem active={menuItem.active}
+					 href={menuItem.href}
+					 fa={menuItem.fa}
+					 name={menuItem.name} 
+					 key={index} />
+				})
+			}
 
 			<hr className="sidebar-divider d-none d-md-block"/>
 		</ul>
