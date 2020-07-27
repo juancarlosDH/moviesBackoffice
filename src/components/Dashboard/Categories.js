@@ -1,21 +1,41 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import CategoryItem from './CategoryItem';
 
-function Categories(props) {
+class Categories extends Component {
 
+    constructor() {
+        super();
+        this.state = {
+            categories : []
+        }
+    }
+
+    componentDidMount() {
+        fetch('http://localhost:3001/api/genres/')
+        .then(res => {
+            return res.json()
+        })
+        .then(res => {
+            //console.log(res)
+            this.setState({ categories: res.data })
+        })
+        .catch(error => { console.log(error); alert('No se pudo traer los generos') })
+    }
+
+
+    render () {
     return (
         <div className="col-lg-6 mb-4">						
             <div className="card shadow mb-4">
                 <div className="card-header py-3">
-                    <h6 className="m-0 font-weight-bold text-primary">Categories in Data Base</h6>
+                    <h6 className="m-0 font-weight-bold text-primary">Genres</h6>
                 </div>
                 <div className="card-body">
                     <div className="row">
                        
                        {
-                           props.categories.map(function(element, index) {
-                             return <CategoryItem number={element} key={index} />
+                           this.state.categories.map(function(genre, index) {
+                             return <CategoryItem name={genre.name} key={index} />
                            })
                        }
                         
@@ -23,11 +43,8 @@ function Categories(props) {
                 </div>
             </div>
         </div>
-    )
-}
-
-Categories.propTypes = {
-    categories : PropTypes.array.isRequired
+        )
+    }
 }
 
 

@@ -4,14 +4,12 @@ import Categories from './Categories';
 
 function SecondaryList() {
 
-    const categories = [1,3,56];
-
     return (
         <div className="row">
             
             <LastProductInDatabase />
 
-            <Categories categories={categories}/>
+            <Categories />
         </div>
     )
 }
