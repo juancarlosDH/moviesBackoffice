@@ -37,14 +37,14 @@ class App extends Component {
     }
 
     render () {
-        const { currentUser, showAdminBoard } = this.state;
+      const { currentUser, showAdminBoard } = this.state;
 
         return (
             <Router>
             <div>
               <nav className="navbar navbar-expand navbar-dark bg-dark">
                 <Link to={"/"} className="navbar-brand">
-                  bezKoder
+                  Backoffice
                 </Link>
                 <div className="navbar-nav mr-auto">
         
@@ -82,7 +82,7 @@ class App extends Component {
                 )}
               </nav>
     
-              <div className="container mt-3">
+              <div>
                 <Switch>
                   <Route exact path="/login" component={Login} />
                   <Route path="/dashboard" component={Template} />
