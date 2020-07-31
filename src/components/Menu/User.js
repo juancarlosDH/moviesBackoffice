@@ -1,6 +1,12 @@
 import React from 'react';
+import AuthService from "./../../services/auth.service";
 
 function User() {
+
+    const handleLogout = () => {
+        AuthService.logout();
+    }
+
     return (
         <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -9,6 +15,12 @@ function User() {
         </button>
 
         <ul className="navbar-nav ml-auto">
+
+            <li className="nav-item dropdown no-arrow mx-1">
+                <a href="/login" className="nav-link" onClick={handleLogout}>
+                    LogOut
+                </a>
+            </li>
 
             <li className="nav-item dropdown no-arrow mx-1">
                 <a className="nav-link dropdown-toggle" href="/" id="alertsDropdown">

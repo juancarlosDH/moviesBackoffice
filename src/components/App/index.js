@@ -3,12 +3,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import './Product.css';
 
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-
 import AuthService from "./../../services/auth.service";
-
+import Initial  from './Initial';
 import Template from './../Template';
-import Login from './../Login';
 
 class App extends Component {
 
@@ -16,8 +13,8 @@ class App extends Component {
         super();
     
         this.state = {
-          showAdminBoard: false,
-          currentUser: undefined
+            showAdminBoard: false,
+            currentUser: undefined
         };
     }
 
@@ -25,71 +22,35 @@ class App extends Component {
         const user = AuthService.getCurrentUser();
     
         if (user) {
+          const valid = AuthService.verifyUser();
+
+          if (!valid) {
+              AuthService.logout();
+              this.props.history.push("/login");
+              window.location.reload();
+              return false;
+          }
+
           this.setState({
-            currentUser: user,
-            showAdminBoard: true
+              currentUser: user,
+              showAdminBoard: true
           });
         }
-    }
-    
-    logOut = () => {
-        AuthService.logout();
+
+        
     }
 
     render () {
-      const { currentUser, showAdminBoard } = this.state;
+        const { currentUser, showAdminBoard } = this.state;
+        
+        let component = <Initial showAdminBoard={showAdminBoard} currentUser={currentUser}/>
+
+        if (this.state.currentUser) {
+            component = <Template />
+        }
 
         return (
-            <Router>
-            <div>
-              <nav className="navbar navbar-expand navbar-dark bg-dark">
-                <Link to={"/"} className="navbar-brand">
-                  Backoffice
-                </Link>
-                <div className="navbar-nav mr-auto">
-        
-                  {showAdminBoard && (
-                    <li className="nav-item">
-                      <Link to={"/dashboard"} className="nav-link">
-                        Board
-                      </Link>
-                    </li>
-                  )}
-
-                </div>
-    
-                {currentUser ? (
-                  <div className="navbar-nav ml-auto">
-                    <li className="nav-item">
-                      <Link to={"/"} className="nav-link">
-                        {currentUser.email}
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <a href="/login" className="nav-link" onClick={this.logOut}>
-                        LogOut
-                      </a>
-                    </li>
-                  </div>
-                ) : (
-                  <div className="navbar-nav ml-auto">
-                    <li className="nav-item">
-                      <Link to={"/login"} className="nav-link">
-                        Login
-                      </Link>
-                    </li>
-                  </div>
-                )}
-              </nav>
-    
-              <div>
-                <Switch>
-                  <Route exact path="/login" component={Login} />
-                  <Route path="/dashboard" component={Template} />
-                </Switch>
-              </div>
-            </div>
-          </Router>
+          component
         )
     }
 }

@@ -24,7 +24,7 @@ class LastProductInDatabase extends Component {
             return res.json()
         })
         .then(res => {
-            console.log(res)
+            //console.log(res)
             this.setState({ movie: res.data })
         })
         .catch(error => { console.log(error); alert('ne se pudo actualizar la pelicula') })

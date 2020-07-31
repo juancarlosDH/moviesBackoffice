@@ -24,7 +24,23 @@ class AuthService {
 
 
     getCurrentUser() {
-        return JSON.parse(localStorage.getItem('user'));;
+        return JSON.parse(localStorage.getItem('user')) || null;
+    }
+
+    verifyUser() {
+        return axios
+            .get(API_URL + "verify",
+            {   headers : {
+                    'x-access-token' : this.getCurrentUser().accessToken
+                }
+            })
+            .then(response => {
+                return true;
+            })
+            .catch(error => {
+                console.log(error);
+                localStorage.removeItem("user");
+            });
     }
 }
 
